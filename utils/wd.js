@@ -46,8 +46,8 @@ Wd.prototype.quit = function () {
 /**
  * подождать элемента
  * @param {webdriver} element элемент, который нужно подождать
- * @param {number} [timeout = 5000] период ожидания
- * @return {webdriver}
+ * @param {number} [timeout = 1000] период ожидания
+ * @return {webdriver} элемент
  */
 Wd.prototype.wait = function (element, timeout) {
   return this.driver.wait(function (element) {
