@@ -70,7 +70,7 @@ wd.describe('Открыть браузер', function () {
       }).then(function () {
         getH1TitleText().then(function (_h1Text) {
           wd.expect(_h1Text).to.not.equal(savedh1);
-        })
+        });
       });
 
     }
@@ -85,7 +85,7 @@ wd.describe('Открыть браузер', function () {
 
       if (h1.length > 0){
         text = h1[0].getText().then(function (_text) {
-           return _text;
+          return _text;
         });
       } else {
         text = promise.anyToPromise(NaN);
