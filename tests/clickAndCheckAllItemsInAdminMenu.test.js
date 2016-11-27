@@ -25,7 +25,8 @@ wd.describe('Открыть браузер', function () {
 
   wd.it('При переходе по пунктам меню меняется заголовок', function () {
     var countItems,
-        countSubitems;
+        countSubitems,
+        savedh1;
 
     this.timeout(150000);
 
@@ -35,6 +36,7 @@ wd.describe('Открыть браузер', function () {
      * @param {number} numSubItem номер подЭлемента
      */
     function clickOnElementAndCheckReaction(numItem, numSubItem) {
+      savedh1 = getH1TitleText();
       menu.getAllMenuItems().then(function (_items) {
         // Проход по подительским элементам
         if (numSubItem === undefined){
@@ -64,7 +66,24 @@ wd.describe('Открыть браузер', function () {
           }
         });
       });
+
     }
+
+    /**
+     * Получить текст h1
+     * @return {String} текст h1
+     */
+    function getH1TitleText() {
+      var h1 = wd.findElements('h1');
+
+      if (h1.length > 0){
+        return h1[0].getText().then(function (text) {
+          return text;
+        });
+      } else {
+        return '';
+      }
+    };
     clickOnElementAndCheckReaction();
   });
 
