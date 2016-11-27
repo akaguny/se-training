@@ -10,6 +10,7 @@ var webdriver = require('selenium-webdriver'),
       this.driver = {};
       this.by = webdriver.By;
       this.until = webdriver.until;
+      this.expect = chai.expect;
     },
 
     that = this;
