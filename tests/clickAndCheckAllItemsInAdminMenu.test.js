@@ -1,7 +1,9 @@
 
 var _wd = require('./../utils/wd.js'),
+    _wdPromise = require('./../utils/wdPromise.js'),
     _menu = require('./../PO/menu'),
     wd = new _wd(),
+    promise = new _wdPromise,
     menu,
     menuItemsCount,
     menuSubItemsCount;
@@ -65,6 +67,10 @@ wd.describe('Открыть браузер', function () {
             }
           }
         });
+      }).then(function () {
+        getH1TitleText().then(function (_h1Text) {
+          wd.expect(_h1Text).to.not.equal(savedh1);
+        })
       });
 
     }
@@ -74,16 +80,18 @@ wd.describe('Открыть браузер', function () {
      * @return {String} текст h1
      */
     function getH1TitleText() {
-      var h1 = wd.findElements('h1');
+      var h1 = wd.driver.findElements(wd.by.css('h1')),
+          text;
 
       if (h1.length > 0){
-        return h1[0].getText().then(function (text) {
-          return text;
+        text = h1[0].getText().then(function (_text) {
+           return _text;
         });
       } else {
-        return '';
+        text = promise.anyToPromise(NaN);
       }
-    };
+      return text;
+    }
     clickOnElementAndCheckReaction();
   });
 
