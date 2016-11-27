@@ -27,8 +27,7 @@ wd.describe('Открыть браузер', function () {
 
   wd.it('При переходе по пунктам меню меняется заголовок', function () {
     var countItems,
-        countSubitems,
-        savedh1;
+        countSubitems;
 
     this.timeout(150000);
 
@@ -38,16 +37,23 @@ wd.describe('Открыть браузер', function () {
      * @param {number} numSubItem номер подЭлемента
      */
     function clickOnElementAndCheckReaction(numItem, numSubItem) {
-      savedh1 = getH1TitleText();
-      menu.getAllMenuItems().then(function (_items) {
+      var savedh1, menuItems;
+
+      getH1TitleText().then(function (_text) {
+        savedh1 = _text;
+      }).then(function () {
+        menu.getAllMenuItems().then(function (_menuItems) {
+          menuItems = _menuItems;
+        });
+      }).then(function () {
         // Проход по подительским элементам
         if (numSubItem === undefined){
-          if (_items.length !== 0 && (numItem === undefined || numItem === false)){
-            _items.forEach(function (item, _num) {
+          if (menuItems.length !== 0 && (numItem === undefined || numItem === false)){
+            menuItems.forEach(function (item, _num) {
               clickOnElementAndCheckReaction(_num);
             });
           } else {
-            _items[numItem].click();
+            menuItems[numItem].click();
           }
         }
       }).then(function () {
@@ -69,28 +75,36 @@ wd.describe('Открыть браузер', function () {
         });
       }).then(function () {
         getH1TitleText().then(function (_h1Text) {
-          wd.expect(_h1Text).to.not.equal(savedh1);
+          try {
+            wd.expect(_h1Text).to.not.be.undefined;
+          } catch (e){
+            console.log(e);
+          }
         });
       });
-
     }
 
     /**
      * Получить текст h1
-     * @return {String} текст h1
+     * @return {Promise.<String>} текст h1
      */
     function getH1TitleText() {
-      var h1 = wd.driver.findElements(wd.by.css('h1')),
+      var h1,
           text;
 
-      if (h1.length > 0){
-        text = h1[0].getText().then(function (_text) {
-          return _text;
-        });
-      } else {
-        text = promise.anyToPromise(NaN);
-      }
-      return text;
+      return wd.driver.findElements(wd.by.css('h1')).then(function (_h1) {
+        h1 = _h1;
+      }).then(function () {
+        if (h1.length > 0){
+          text = h1[0].getText().then(function (_text) {
+            return _text;
+          });
+        } else {
+          text = promise.anyToPromise(undefined);
+        }
+      }).then(function () {
+        return text;
+      });
     }
     clickOnElementAndCheckReaction();
   });
