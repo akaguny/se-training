@@ -1,29 +1,32 @@
-var adminPage = require('./adminPage.js'),
+var _adminPage = require('./adminPage.js'),
     util = require('util'),
-    menu = function () {
-      this.b = 'b';
-    };
+    AdminPage = new _adminPage();
 
-util.inherits(menu, adminPage);
+/**
+ * Конструктор
+ * @constructor
+ */
+function Menu() {
+}
 
 /**
  * Получить все элементы меню
  * @returns {webdriver[]} все элементы меню
  */
-menu.prototype.getAllMenuItems = function () {
-  return this.getElementOnCurrentPage('menu')
-      .findElements(wd.by.css('#box-apps-menu > li'));
+Menu.prototype.getAllMenuItems = function () {
+  return this.getElementOnCurrentPage('Menu')
+      .findElements(wd.by.css('#box-apps-Menu > li'));
 };
 
 /**
  * Получить раскрытый элемент меню
  * @returns {webdriver[]} раскрытый элемент меню
  */
-menu.prototype.getOpenedMenuItem = function () {
+Menu.prototype.getOpenedMenuItem = function () {
   var openedMenuItem;
 
-  openedMenuItem = this.getElementOnCurrentPage('menu')
-      .findElements(wd.by.css('#box-apps-menu > li.selected'));
+  openedMenuItem = this.getElementOnCurrentPage('Menu')
+      .findElements(wd.by.css('#box-apps-Menu > li.selected'));
 
   return wd.wait(openedMenuItem[0]).then(function () {
     return openedMenuItem;
@@ -34,7 +37,7 @@ menu.prototype.getOpenedMenuItem = function () {
  * Получить все элементы меню
  * @returns {Promise.webdriver[]} все подэлементы меню
  */
-menu.prototype.getAllMenuSubItems = function () {
+Menu.prototype.getAllMenuSubItems = function () {
   return this.getOpenedMenuItem().then(function (_openedMenuItem) {
     if (_openedMenuItem.length > 0) {
       return _openedMenuItem[0].findElements(wd.by.css('li'));
@@ -44,4 +47,4 @@ menu.prototype.getAllMenuSubItems = function () {
   });
 };
 
-module.exports = menu;
+module.exports = Menu;
