@@ -1,7 +1,13 @@
+var _anyPage = require('./anyPage.js'),
+    util = require('util');
 
-var adminPage = function () {
-      this.a = 'a';
-    };
+/**
+ * Конструктор
+ */
+function AdminPage() {
+}
+
+util.inherits(AdminPage, _anyPage);
 
 /**
  * Получить элемент на текущей станице
@@ -9,7 +15,7 @@ var adminPage = function () {
  * ('sidebar' | 'menu' | 'header')
  * @returns {webdriver} элемент
  */
-adminPage.prototype.getElementOnCurrentPage = function (name) {
+AdminPage.prototype.getElementOnCurrentPage = function (name) {
   var elem;
 
   switch (name){
@@ -31,4 +37,4 @@ adminPage.prototype.getElementOnCurrentPage = function (name) {
 };
 
 
-module.exports = adminPage;
+module.exports = AdminPage;
