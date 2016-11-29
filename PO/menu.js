@@ -38,12 +38,15 @@ Menu.prototype.getOpenedMenuItem = function () {
  * @returns {Promise.webdriver[]} все подэлементы меню
  */
 Menu.prototype.getAllMenuSubItems = function () {
+  var subElements;
+
   return this.getOpenedMenuItem().then(function (_openedMenuItem) {
     if (_openedMenuItem.length > 0) {
-      return _openedMenuItem[0].findElements(wd.by.css('li'));
+      subElements = _openedMenuItem[0].findElements(wd.by.css('li'));
     } else {
-      return [];
+      subElements = [];
     }
+    return subElements;
   });
 };
 
