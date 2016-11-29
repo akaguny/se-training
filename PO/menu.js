@@ -3,10 +3,11 @@ var _adminPage = require('./adminPage.js'),
     AdminPage = new _adminPage();
 
 /**
- * Конструктор
+ * Конструктор PO меню
  * @constructor
  */
 function Menu() {
+
 }
 
 /**
@@ -14,8 +15,8 @@ function Menu() {
  * @returns {webdriver[]} все элементы меню
  */
 Menu.prototype.getAllMenuItems = function () {
-  return this.getElementOnCurrentPage('Menu')
-      .findElements(wd.by.css('#box-apps-Menu > li'));
+  return AdminPage.getElementOnCurrentPage('menu')
+      .findElements(wd.by.css('#box-apps-menu > li'));
 };
 
 /**
@@ -25,8 +26,8 @@ Menu.prototype.getAllMenuItems = function () {
 Menu.prototype.getOpenedMenuItem = function () {
   var openedMenuItem;
 
-  openedMenuItem = this.getElementOnCurrentPage('Menu')
-      .findElements(wd.by.css('#box-apps-Menu > li.selected'));
+  openedMenuItem = AdminPage.getElementOnCurrentPage('menu')
+      .findElements(wd.by.css('#box-apps-menu > li.selected'));
 
   return wd.wait(openedMenuItem[0]).then(function () {
     return openedMenuItem;
