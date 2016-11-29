@@ -1,15 +1,16 @@
 
 var _wd = require('./../utils/wd.js'),
-    _wdPromise = require('./../utils/wdPromise.js'),
-    _menu = require('./../PO/menu'),
     wd = new _wd(),
-    promise = new _wdPromise,
-    menu,
+    _adminPage = require('./../PO/adminPage'),
+    _menu = require('./../PO/menu'),
+    AdminPage,
+    Menu,
     menuItemsCount,
     menuSubItemsCount;
 
 wd.before(function () {
-  menu = new _menu();
+  AdminPage = new _adminPage();
+  Menu = new _menu();
   wd.init('chrome');
 });
 
@@ -39,10 +40,10 @@ wd.describe('Открыть браузер', function () {
     function clickOnElementAndCheckReaction(numItem, numSubItem) {
       var savedh1, menuItems;
 
-      getH1TitleText().then(function (_text) {
+      AdminPage.getH1TitleText(wd).then(function (_text) {
         savedh1 = _text;
       }).then(function () {
-        menu.getAllMenuItems().then(function (_menuItems) {
+        Menu.getAllMenuItems().then(function (_menuItems) {
           menuItems = _menuItems;
         });
       }).then(function () {
@@ -58,7 +59,7 @@ wd.describe('Открыть браузер', function () {
         }
       }).then(function () {
         // Проход по дочерним элементам
-        menu.getAllMenuSubItems().then(function (_subItems) {
+        Menu.getAllMenuSubItems().then(function (_subItems) {
           if (_subItems.length !== 0){
             if (numSubItem === undefined){
               _subItems.forEach(function (subItem, __num) {
@@ -74,7 +75,7 @@ wd.describe('Открыть браузер', function () {
           }
         });
       }).then(function () {
-        getH1TitleText().then(function (_h1Text) {
+        AdminPage.getH1TitleText().then(function (_h1Text) {
           try {
             wd.expect(_h1Text).to.not.be.undefined;
           } catch (e){
@@ -84,28 +85,7 @@ wd.describe('Открыть браузер', function () {
       });
     }
 
-    /**
-     * Получить текст h1
-     * @return {Promise.<String>} текст h1
-     */
-    function getH1TitleText() {
-      var h1,
-          text;
 
-      return wd.driver.findElements(wd.by.css('h1')).then(function (_h1) {
-        h1 = _h1;
-      }).then(function () {
-        if (h1.length > 0){
-          text = h1[0].getText().then(function (_text) {
-            return _text;
-          });
-        } else {
-          text = promise.anyToPromise(undefined);
-        }
-      }).then(function () {
-        return text;
-      });
-    }
     clickOnElementAndCheckReaction();
   });
 
