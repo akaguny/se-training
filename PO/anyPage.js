@@ -30,4 +30,12 @@ AnyPage.prototype.getH1TitleText = function() {
   });
 };
 
+/**
+ * Открыть страницу, описанную данным PO
+ * Метод переопределяется в наследниках
+ */
+AnyPage.prototype.get = function () {
+
+};
+
 module.exports = AnyPage;
