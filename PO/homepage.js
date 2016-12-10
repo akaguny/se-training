@@ -37,8 +37,8 @@ HomePage.prototype.getElementOnCurrentPage = function (name) {
 
 /**
  * Проверка, что продукт имеет label
- * @param {elementFinder} элемент мини-карточка продукта
- * @param {boolean} [isHaveSticker=true] что проверяем, есть ли стикер у товара?
+ * @param {elementFinder} product элемент мини-карточка продукта
+ * @param {boolean} [_isHaveSticker=true] что проверяем, есть ли стикер у товара?
  */
 HomePage.prototype.isProductMiniCardHaveSticker = function (product, _isHaveSticker) {
   var isHaveSticker = _isHaveSticker !== false ? true : _isHaveSticker,
@@ -59,12 +59,9 @@ HomePage.prototype.isAllProductsMiniCardHaveStickers = function (_isHaveSticker)
   var that = this;
 
   this.getElementOnCurrentPage('products').then(function (_productsArray) {
-      _productsArray.forEach(function (item, array) {
-        item.getAttribute('class').then(function(_class){
-        }).then(function () {
-          that.isProductMiniCardHaveSticker(item, _isHaveSticker);
-        });
-      });
+    _productsArray.forEach(function (item, array) {
+      that.isProductMiniCardHaveSticker(item, _isHaveSticker);
+    });
   });
 };
 
