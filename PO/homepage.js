@@ -12,7 +12,7 @@ util.inherits(HomePage, _anyPage);
 
 HomePage.prototype.get = function () {
   wd.get('http://litecart/en/');
-  wd.wait(wd.driver.findElements(wd.by.css('.box-most-popular')));
+  wd.waitElement(wd.driver.findElements(wd.by.css('.box-most-popular')));
 };
 
 /**

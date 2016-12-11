@@ -29,7 +29,7 @@ Menu.prototype.getOpenedMenuItem = function () {
   openedMenuItem = AdminPage.getElementOnCurrentPage('menu')
       .findElements(wd.by.css('#box-apps-menu > li.selected'));
 
-  return wd.wait(openedMenuItem[0]).then(function () {
+  return wd.waitElement(openedMenuItem[0]).then(function () {
     return openedMenuItem;
   });
 };
