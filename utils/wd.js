@@ -50,7 +50,7 @@ Wd.prototype.quit = function () {
  * @return {webdriver} элемент
  */
 Wd.prototype.waitElement = function (element, timeout) {
-  return this.driver.waitElement(function (element) {
+  return this.driver.wait(function (element) {
     return element;
   }, timeout || 1000);
 };
