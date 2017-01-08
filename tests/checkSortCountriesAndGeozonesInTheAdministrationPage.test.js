@@ -29,5 +29,10 @@ wd.describe('Проверка на наличие стикеров у товар
     countriesPage.get();
   });
 
+  wd.it('4. Проверить, что страны расположены в алфавитном порядке', function () {
+    this.timeout(150000);
+    countriesPage.checkSortingOfCountriesByName();
+  });
+
 
 });

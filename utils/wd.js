@@ -11,6 +11,7 @@ var webdriver = require('selenium-webdriver'),
       this.by = webdriver.By;
       this.until = webdriver.until;
       this.expect = chai.expect;
+      this.assert = chai.assert;
     },
 
     that = this;
