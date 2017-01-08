@@ -38,4 +38,11 @@ AnyPage.prototype.get = function () {
 
 };
 
+/**
+ * Клик по cancel
+ */
+AnyPage.prototype.clickCancel = function () {
+  wd.driver.findElement(wd.by.name('cancel')).click();
+};
+
 module.exports = AnyPage;
